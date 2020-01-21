@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:id="@+id/activity_connect"
-    tools:context=".ConnectActivity">
+    tools:context="com.paygilant.myshop.OnLine.ByOnlineActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,8 @@
                 android:background="@color/selected_button"
                 android:fontFamily="sans-serif-medium"
                 android:lineSpacingExtra="3sp"
-                android:text="Register"
+                android:text="@string/new_user"
+                android:gravity="center"
                 android:foreground="?attr/selectableItemBackground"
                 android:textAllCaps="false"
                 android:textColor="@color/white_Color"
@@ -44,7 +45,7 @@
                 android:textAllCaps="false"
                 android:fontFamily="sans-serif-medium"
                 android:lineSpacingExtra="3sp"
-                android:text="Login"
+                android:text="@string/existing_user"
                 android:textColor="@color/unselected_text"
                 android:textSize="14sp"
                 android:textStyle="normal" />
@@ -57,39 +58,91 @@
             android:orientation="vertical"
             android:gravity="center">
 
-        <EditText
-            android:id="@+id/editTextConnect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:layout_marginStart="40dp"
-            android:fontFamily="sans-serif"
-            android:hint="@string/mobile_number"
-            android:inputType="phone"
-            android:digits="1234567890"
-            android:lineSpacingExtra="6sp"
-            android:textColorHint="#61000000"
-            android:textColorLink="@color/ui_appBar_start"
-            android:textSize="18sp"
-            android:background="@drawable/edt_bg_selector"
-            android:textStyle="normal" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonConnect"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginStart="40dp"
-            android:textSize="14sp"
-            android:foreground="?attr/selectableItemBackground"
+            <EditText
+                android:id="@+id/editTextConnect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="sans-serif"
+                android:hint="@string/username"
+                android:lineSpacingExtra="6sp"
+                android:textColorHint="#61000000"
+                android:textColorLink="@color/ui_appBar_start"
+                android:textSize="18sp"
+                android:inputType="text"
 
-            android:fontFamily="sans-serif-medium"
-            android:background="#33999999"
-            android:textStyle="normal"
-            android:textColor="#000"
-            android:lineSpacingExtra="3sp"
-            android:gravity="center"
-            android:text="@string/connect"/>
+                android:background="@drawable/edt_bg_selector"
+                android:textStyle="normal" />
+            <EditText
+                android:paddingTop="10dp"
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="sans-serif"
+                android:hint="@string/password"
+                android:lineSpacingExtra="6sp"
+                android:textColorHint="#61000000"
+                android:textColorLink="@color/ui_appBar_start"
+                android:textSize="18sp"
+                android:inputType="textPassword"
+
+                android:background="@drawable/edt_bg_selector"
+                android:textStyle="normal" />
+            <EditText
+                android:paddingTop="10dp"
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="sans-serif"
+                android:hint="@string/email"
+                android:lineSpacingExtra="6sp"
+                android:textColorHint="#61000000"
+                android:textColorLink="@color/ui_appBar_start"
+                android:textSize="18sp"
+                android:background="@drawable/edt_bg_selector"
+                android:inputType="textEmailAddress"
+
+                android:textStyle="normal" />
+
+            <EditText
+                android:paddingTop="10dp"
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="sans-serif"
+                android:hint="@string/mobile_number"
+                android:inputType="phone"
+                android:digits="1234567890+-"
+                android:lineSpacingExtra="6sp"
+                android:textColorHint="#61000000"
+                android:textColorLink="@color/ui_appBar_start"
+                android:textSize="18sp"
+                android:background="@drawable/edt_bg_selector"
+                android:textStyle="normal" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonConnect"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:textSize="14sp"
+                android:foreground="?attr/selectableItemBackground"
+
+                android:fontFamily="sans-serif-medium"
+                android:background="#33999999"
+                android:textStyle="normal"
+                android:textColor="#000"
+                android:lineSpacingExtra="3sp"
+                android:gravity="center"
+                android:text="@string/connect"/>
 
         </LinearLayout>
     </LinearLayout>

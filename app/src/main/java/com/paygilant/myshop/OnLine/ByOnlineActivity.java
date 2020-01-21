@@ -5,21 +5,38 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
+import android.support.test.uiautomator.By;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.paygilant.PG_FraudDetection_SDK.Biometric.PaygilantScreenListener;
+import com.paygilant.PG_FraudDetection_SDK.Communication.PaygilantCommunication;
+import com.paygilant.PG_FraudDetection_SDK.PaygilantManager;
+import com.paygilant.myshop.ConnectActivity;
 import com.paygilant.myshop.MainActivity;
 import com.paygilant.myshop.R;
 import com.paygilant.myshop.ResultActivityAmount;
+import com.paygilant.pgdata.CheckPoint.CurrencyCode;
+import com.paygilant.pgdata.CheckPoint.ScreenListenerType;
+import com.paygilant.pgdata.CheckPoint.Transaction;
+import com.paygilant.pgdata.CheckPoint.TransactionType;
+import com.paygilant.pgdata.CheckPoint.param.Address;
+import com.paygilant.pgdata.CheckPoint.param.AuthorizationResponse;
+import com.paygilant.pgdata.CheckPoint.param.Payment;
+import com.paygilant.pgdata.CheckPoint.param.User;
+import com.paygilant.pgdata.CheckPoint.param.VerificationType;
 
 //import com.paygilant.deviceidetification.fingerprintdialog.FingerprintAuthenticationDialogFragment;
 
@@ -38,11 +55,13 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
     SearchView searchView;
     public  boolean isPress =false;
     private  Boolean canAccess = true;
+    private String userID;
 
     public boolean isScanFirst = false;
     public boolean isScanFirst() {
         return isScanFirst;
     }
+    private PaygilantScreenListener listener;
 
     public void setScanFirst(boolean scanFirst) {
         isScanFirst = scanFirst;
@@ -51,9 +70,14 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_by_online);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ui_appBar_start)));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        forceLTRSupported(this);
+//        forceLTRSupported(this);
+        toolbar.inflateMenu(R.menu.menu);
+//        forceLTRSupported(this);
 //        bitmap = getImage(Environment.getExternalStorageDirectory()+File.separator+ "test.png");
 
         searchView = findViewById(R.id.searchView);
@@ -75,6 +99,7 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        userID = preferences.getString("USER_NAME", "");
 
 
 
@@ -105,26 +130,35 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 //        actionManager.setTouchToAllChildren(v);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.back, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
-
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        Intent intent;
-        switch (id) {
-            case R.id.icon_back:
-                onBackPressed();
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout:
+                SharedPreferences preferences;
+                SharedPreferences.Editor editor;
+                preferences = PreferenceManager.getDefaultSharedPreferences(ByOnlineActivity.this);
+                editor = preferences.edit();
+                editor.putString("USER_NAME", "");
+                editor.apply();
+
+                Intent intent = new Intent(ByOnlineActivity.this, ConnectActivity.class);
+                startActivity(intent);
+                finish();
+
+
+//                addSomething();
                 return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -134,6 +168,7 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 //        actionManager.resumeListen();
 
         super.onResume();
+        listener = PaygilantManager.getInstance(this).startNewScreenListener(ScreenListenerType.PRODUCT_SCREEN,2,this);
 
     }
     @Override
@@ -147,6 +182,9 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 //        actionManager.pauseListenToSensors();
 
         super.onPause();
+        if (listener != null) {
+            listener.pauseListenToSensors();
+        }
     }
 
     @Override
@@ -165,20 +203,20 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 
     @Override
     public void onBackPressed() {
+        // super.onBackPressed();
 
-       // super.onBackPressed();
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle(R.string.app_name);
-        alertDialogBuilder.setMessage("Do You Want To Exit App?");
+        alertDialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.app_name));
+        alertDialogBuilder.setMessage(getResources().getString(R.string.exit_condition));
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton("YES",new DialogInterface.OnClickListener() {
+                .setPositiveButton(getResources().getString(R.string.yes),new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         dialog.dismiss();
                         finish();
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -187,9 +225,53 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-           /* Intent intent = new Intent(this, Amount.class);
-            startActivity(intent);
-            finish();*/
+
+
+    }
+    private void getRisk(final ImageItem item) {
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE);
+        hud.show();
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        userID = preferences.getString("USER_NAME", "");
+        final String email = preferences.getString("EMAIL", "");
+
+        final String phoneNumber = preferences.getString("PHONE_NUMBER", "");
+        User user = new User(userID,email, VerificationType.NOT_VERIFIED,phoneNumber,VerificationType.NOT_VERIFIED,null);
+
+        Transaction transaction = new Transaction(System.currentTimeMillis(), TransactionType.MONEY_TRANSFER,
+                CurrencyCode.EUR, item.getTitle(),Double.valueOf(item.getPrice()),
+                user,new Address(),new Address(),new Payment(),new AuthorizationResponse());
+        PaygilantManager.getInstance(this).getRiskForCheckPoint(transaction, new PaygilantCommunication() {
+            @Override
+            public void receiveRisk(int i, String s, String s1) {
+                if (i == -1 ){
+                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ByOnlineActivity.this);
+                    alertDialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.app_name));
+                    alertDialogBuilder.setMessage(getResources().getString(R.string.internet_connection));
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton(getResources().getString(R.string.retry),new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    dialog.dismiss();
+                                    getRisk(item);
+                                }
+                            });
+
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }else {
+                    isScanFirst = false;
+                    Intent intent = new Intent(ByOnlineActivity.this, ResultActivityAmount.class);
+                    intent.putExtra("RISK_RESULT", i);
+                    hud.dismiss();
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
     }
     @Override
     public void onItemClick(View view, int position) {
@@ -199,19 +281,17 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 //            if (item.getTitle().equals(imageItems.get(numRan).getTitle())) {
         if (!isPress) {
             isPress = true;
-            Intent intent = new Intent(ByOnlineActivity.this, ResultActivityAmount.class);
 
-            if (canAccess){
-                intent.putExtra("RISK_RESULT", 0);
-
-            }else {
-                intent.putExtra("RISK_RESULT", 3);
-            }
-            startActivity(intent);
-            finish();
+            ImageItem item = adapter.getItem(position);
+            getRisk(item);
 
         }
 
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
     public class PurchaseButtonClickListener implements View.OnClickListener {
 

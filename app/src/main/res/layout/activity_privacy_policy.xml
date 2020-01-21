@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".PrivacyPolicyActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="?attr/actionBarSize" >
+
+
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:weightSum="8"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <WebView
+                android:id="@+id/web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </WebView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="10"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/buttonAgree"
+                android:layout_weight="5"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/teach_coin_primary"
+                android:textColor="@color/add_wallets_header_color"
+                android:text="Continue" />
+            <Button
+                android:id="@+id/buttonNotAgree"
+                android:layout_weight="5"
+                android:textColor="@color/teach_coin_primary"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="0dp"
+
+                android:text="No, thanks" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="bottom"
+
+            android:orientation="vertical">
+            <WebView
+                android:id="@+id/web2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </WebView>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -14,4 +14,12 @@
     <color name="warning_color">#f4511e</color>
     <color name="hint_color">#42000000</color>
     <color name="success_color">#009688</color>
+    <color name="teach_coin_primary">#8AD200</color>
+    <item name="white" type="color">#ffffff</item>
+
+
+    <color name="add_wallets_header_color">#f9f9f9</color>
+
+
+
 </resources>
