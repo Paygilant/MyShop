@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.paygilant:PaygilantAndroidSDK:2.0.19@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8a868b7222bba0cc0f90ed89aef43adf/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8a868b7222bba0cc0f90ed89aef43adf/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
