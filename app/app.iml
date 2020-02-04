@@ -110,13 +110,10 @@
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:2.0.0-beta3@jar" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit-dep:4.10@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:4.2.2@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okio:okio:2.2.2@jar" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.50@jar" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.50@jar" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.10.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.14.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.GoodieBag:Pinview:v1.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.paygilant:PaygilantAndroidSDK:2.0.19@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.paygilant:PaygilantAndroidSDK:2.0.20@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout:2.0.0-beta3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:design:28.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7:28.0.0@aar" level="project" />

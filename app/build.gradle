@@ -7,8 +7,8 @@ android {
         applicationId "com.paygilant.myshop"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.03"
+        versionCode 4
+        versionName "1.04"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.kaopiz:kprogresshud:1.2.0'
-    implementation 'com.paygilant:PaygilantAndroidSDK:2.0.19'
+    implementation 'com.paygilant:PaygilantAndroidSDK:2.0.20'
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta3'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
