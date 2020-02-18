@@ -34,7 +34,9 @@ import com.paygilant.pgdata.CheckPoint.Transaction;
 import com.paygilant.pgdata.CheckPoint.TransactionType;
 import com.paygilant.pgdata.CheckPoint.param.Address;
 import com.paygilant.pgdata.CheckPoint.param.AuthorizationResponse;
+import com.paygilant.pgdata.CheckPoint.param.CreditCardDetail;
 import com.paygilant.pgdata.CheckPoint.param.Payment;
+import com.paygilant.pgdata.CheckPoint.param.PaymentMethodType;
 import com.paygilant.pgdata.CheckPoint.param.User;
 import com.paygilant.pgdata.CheckPoint.param.VerificationType;
 
@@ -238,11 +240,27 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
         final String email = preferences.getString("EMAIL", "");
 
         final String phoneNumber = preferences.getString("PHONE_NUMBER", "");
-        User user = new User(userID,email, VerificationType.NOT_VERIFIED,phoneNumber,VerificationType.NOT_VERIFIED,null);
+
+
+
+
+        Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
+                "",  "New York",  "10001", "US", "", "+12885550153");
+        User user = new User(userID,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);
+
+
+        CreditCardDetail credit = new CreditCardDetail( "EGHV234AUD54367",  "4q5w8e0r1t0y",  "458010",  "7854",  19,  06);
+        Payment payment = new Payment( PaymentMethodType.CREDIT_CARD,  "stripe",  "Tyler Durden","",  credit,null );
+
+
+        Address billingAddress = new Address( "Tyler",  "Durden",  "537 Paper street",  "",  "Bradford",  "DE",  "US",  "19808",  "+12885550153");
+        Address shippingAddress = new Address( "Jane",  "Doe",  "241 S Moreno Drive",  "",  "Beverly Hills",  "CA",  "US",  "19808",  "+14185551234");
+
+        AuthorizationResponse authResponse = new AuthorizationResponse( "success",  "Y",  "N7",  "Decline for CVV2 failure (VISA)",  "00",  "Transaction approved",  "Y",  "Y",  "5");
 
         Transaction transaction = new Transaction(System.currentTimeMillis(), TransactionType.MONEY_TRANSFER,
                 CurrencyCode.EUR, item.getTitle(),Double.valueOf(item.getPrice()),
-                user,new Address(),new Address(),new Payment(),new AuthorizationResponse());
+                user,billingAddress,shippingAddress,payment,authResponse);
         PaygilantManager.getInstance(this).getRiskForCheckPoint(transaction, new PaygilantCommunication() {
             @Override
             public void receiveRisk(int i, String s, String s1) {

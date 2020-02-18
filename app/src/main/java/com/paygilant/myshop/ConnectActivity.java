@@ -195,8 +195,9 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         editor.putString("PHONE_NUMBER", phoneNumber);
         editor.apply();
 
-        User user = new User(userName,email, VerificationType.NOT_VERIFIED,phoneNumber,VerificationType.NOT_VERIFIED,null);
-        Registration currReg = new Registration(user);
+        Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
+                "",  "New York",  "10001", "US", "", "+12885550153");
+        User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);        Registration currReg = new Registration(user);
         PaygilantManager.getInstance(this).arriveToCheckPoint(currReg);
         boolean isPress = true;
         Intent intent = new Intent(ConnectActivity.this, ByOnlineActivity.class);
@@ -217,8 +218,9 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         editor = preferences.edit();
         editor.putString("USER_NAME", userName);
         editor.apply();
-        User user = new User(userName,email, VerificationType.NOT_VERIFIED,phoneNumber,VerificationType.NOT_VERIFIED,null);
-        Login login = new Login(user);
+        Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
+                "",  "New York",  "10001", "US", "", "+12885550153");
+        User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);        Login login = new Login(user);
         PaygilantManager.getInstance(this).arriveToCheckPoint(login);
         boolean isPress = true;
         Intent intent = new Intent(ConnectActivity.this, ByOnlineActivity.class);
@@ -249,7 +251,6 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
     protected void onDestroy() {
 
         super.onDestroy();
-
     }
     void saveImage(String pthAndFylTtlVar, Bitmap iptBmjVar)
     {
@@ -261,7 +262,6 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         }
         catch (Exception errVar) { errVar.printStackTrace(); }
     }
-
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -275,7 +275,12 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        String str = editText[0].getText().toString();
+        if(str.length() > 0 && str.contains(" "))
+        {
+            editText[0].setText(editText[0].getText().toString().replaceAll(" ",""));
+            editText[0].setSelection(editText[0].getText().length());
+        }
         if (isReg) {
             if ((editText[0].length() > 0) && (editText[1].length() > 0) && (editText[2].length() > 0) && (editText[3].length() > 0)) {
                 buttonConnect.setBackgroundColor(getResources().getColor(R.color.ui_appBar_start));
