@@ -196,8 +196,9 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         editor.apply();
 
         Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
-                "",  "New York",  "10001", "US", "", "+12885550153");
-        User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);        Registration currReg = new Registration(user);
+                "",  "New York",  "NY", "US", "10001", "+12885550153");
+        User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);
+        Registration currReg = new Registration(user);
         PaygilantManager.getInstance(this).arriveToCheckPoint(currReg);
         boolean isPress = true;
         Intent intent = new Intent(ConnectActivity.this, ByOnlineActivity.class);
@@ -219,8 +220,9 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         editor.putString("USER_NAME", userName);
         editor.apply();
         Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
-                "",  "New York",  "10001", "US", "", "+12885550153");
-        User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);        Login login = new Login(user);
+                "",  "New York",  "NY", "US", "10001", "+12885550153");
+        User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);
+        Login login = new Login(user);
         PaygilantManager.getInstance(this).arriveToCheckPoint(login);
         boolean isPress = true;
         Intent intent = new Intent(ConnectActivity.this, ByOnlineActivity.class);

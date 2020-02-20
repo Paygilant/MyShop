@@ -245,7 +245,7 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 
 
         Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
-                "",  "New York",  "10001", "US", "", "+12885550153");
+                "",  "New York",  "NY", "US", "10001", "+12885550153");
         User user = new User(userID,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);
 
 
@@ -254,7 +254,7 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 
 
         Address billingAddress = new Address( "Tyler",  "Durden",  "537 Paper street",  "",  "Bradford",  "DE",  "US",  "19808",  "+12885550153");
-        Address shippingAddress = new Address( "Jane",  "Doe",  "241 S Moreno Drive",  "",  "Beverly Hills",  "CA",  "US",  "19808",  "+14185551234");
+        Address shippingAddress = new Address( "Jane",  "Doe",  "241 S Moreno Drive",  "",  "Beverly Hills",  "CA",  "US",  "90210",  "+14185551234");
 
         AuthorizationResponse authResponse = new AuthorizationResponse( "success",  "Y",  "N7",  "Decline for CVV2 failure (VISA)",  "00",  "Transaction approved",  "Y",  "Y",  "5");
 
