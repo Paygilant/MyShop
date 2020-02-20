@@ -258,7 +258,7 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
 
         AuthorizationResponse authResponse = new AuthorizationResponse( "success",  "Y",  "N7",  "Decline for CVV2 failure (VISA)",  "00",  "Transaction approved",  "Y",  "Y",  "5");
 
-        Transaction transaction = new Transaction(System.currentTimeMillis(), TransactionType.MONEY_TRANSFER,
+        Transaction transaction = new Transaction(System.currentTimeMillis(), TransactionType.PURCHASE,
                 CurrencyCode.EUR, item.getTitle(),Double.valueOf(item.getPrice()),
                 user,billingAddress,shippingAddress,payment,authResponse);
         PaygilantManager.getInstance(this).getRiskForCheckPoint(transaction, new PaygilantCommunication() {
