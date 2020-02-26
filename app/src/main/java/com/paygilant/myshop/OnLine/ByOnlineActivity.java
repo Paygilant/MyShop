@@ -150,6 +150,7 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
                 editor.putString("USER_NAME", "");
                 editor.apply();
 
+                PaygilantManager.getInstance(this).logout();
                 Intent intent = new Intent(ByOnlineActivity.this, ConnectActivity.class);
                 startActivity(intent);
                 finish();

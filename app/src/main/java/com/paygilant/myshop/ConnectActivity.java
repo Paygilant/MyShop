@@ -240,13 +240,13 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
     @Override
     protected void onResume(){
         super.onResume();
-        listener = PaygilantManager.getInstance(this).startNewScreenListener(ScreenListenerType.LOGIN_FORM,1,this);
+//        listener = PaygilantManager.getInstance(this).startNewScreenListener(ScreenListenerType.LOGIN_FORM,1,this);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        if (listener!=null)
-            listener.pauseListenToSensors();
+//        if (listener!=null)
+//            listener.pauseListenToSensors();
     }
 
     @Override

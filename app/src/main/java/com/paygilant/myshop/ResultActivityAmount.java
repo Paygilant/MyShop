@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.paygilant.PG_FraudDetection_SDK.PaygilantManager;
 import com.paygilant.myshop.OnLine.ByOnlineActivity;
 
 
@@ -125,6 +126,7 @@ public class ResultActivityAmount extends AppCompatActivity {
                 editor = preferences.edit();
                 editor.putString("USER_NAME", "");
                 editor.apply();
+                PaygilantManager.getInstance(this).logout();
 
                 Intent intent = new Intent(ResultActivityAmount.this, ConnectActivity.class);
                 startActivity(intent);
