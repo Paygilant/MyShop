@@ -113,7 +113,7 @@
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.10.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.14.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.GoodieBag:Pinview:v1.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.paygilant:PaygilantAndroidSDK:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.paygilant:PaygilantAndroidSDK:2.1.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout:2.0.0-beta3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:design:28.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7:28.0.0@aar" level="project" />
