@@ -28,6 +28,8 @@ import com.paygilant.myshop.ConnectActivity;
 import com.paygilant.myshop.MainActivity;
 import com.paygilant.myshop.R;
 import com.paygilant.myshop.ResultActivityAmount;
+import com.paygilant.pgdata.CheckPoint.CheckPointStatus;
+import com.paygilant.pgdata.CheckPoint.CheckPointType;
 import com.paygilant.pgdata.CheckPoint.CurrencyCode;
 import com.paygilant.pgdata.CheckPoint.ScreenListenerType;
 import com.paygilant.pgdata.CheckPoint.Transaction;
@@ -43,6 +45,7 @@ import com.paygilant.pgdata.CheckPoint.param.VerificationType;
 //import com.paygilant.deviceidetification.fingerprintdialog.FingerprintAuthenticationDialogFragment;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.crypto.Cipher;
 
@@ -265,6 +268,8 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
         PaygilantManager.getInstance(this).getRiskForCheckPoint(transaction, new PaygilantCommunication() {
             @Override
             public void receiveRisk(int i, String s, String s1) {
+                PaygilantManager.getInstance(ByOnlineActivity.this).updateCheckPointStatus(CheckPointType.TRANSACTION, s1, CheckPointStatus.APPROVED, UUID.randomUUID().toString());
+
                 if (i == -1 ){
                     final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ByOnlineActivity.this);
                     alertDialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.app_name));
