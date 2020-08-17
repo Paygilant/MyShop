@@ -1,46 +1,34 @@
 package com.paygilant.myshop;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.paygilant.PG_FraudDetection_SDK.Biometric.PaygilantScreenListener;
-import com.paygilant.PG_FraudDetection_SDK.Communication.PaygilantCommunication;
 import com.paygilant.PG_FraudDetection_SDK.PaygilantManager;
 import com.paygilant.myshop.OnLine.ByOnlineActivity;
-import com.paygilant.myshop.R;
 import com.paygilant.pgdata.CheckPoint.Login;
 import com.paygilant.pgdata.CheckPoint.Registration;
-import com.paygilant.pgdata.CheckPoint.ScreenListenerType;
 import com.paygilant.pgdata.CheckPoint.param.Address;
 import com.paygilant.pgdata.CheckPoint.param.User;
 import com.paygilant.pgdata.CheckPoint.param.VerificationType;
 
 import java.io.FileOutputStream;
-import java.util.Locale;
 
 
 public class ConnectActivity extends AppCompatActivity implements TextWatcher {

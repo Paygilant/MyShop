@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -7,9 +9,9 @@ android {
         applicationId "com.paygilant.myshop"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 9
-        versionName "1.09"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 10
+        versionName "1.10"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -22,14 +24,16 @@ android {
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude module: 'hamcrest-core'
         exclude module: 'hamcrest-library'
         exclude module: 'hamcrest-integration'
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:2.2') {
+    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.1.0') {
         // Necessary to avoid version conflicts
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
@@ -45,16 +49,16 @@ dependencies {
     implementation 'com.github.GoodieBag:Pinview:v1.1'
     testImplementation 'junit:junit:4.12'
 //    implementation project(':PG_FraudDetection_SDK')
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:design:28.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.android.support.test:testing-support-lib:0.1'
-    implementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+    implementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.kaopiz:kprogresshud:1.2.0'
     implementation 'com.paygilant:PaygilantAndroidSDK:2.1.3'
-    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta3'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }

@@ -3,15 +3,14 @@ package com.paygilant.myshop.OnLine;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
-import android.support.test.uiautomator.By;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.test.uiautomator.By;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,8 +47,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.crypto.Cipher;
-
-import static com.paygilant.myshop.MainActivity.forceLTRSupported;
 
 
 public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
