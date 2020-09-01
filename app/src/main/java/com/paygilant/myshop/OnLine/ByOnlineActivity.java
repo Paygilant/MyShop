@@ -27,6 +27,8 @@ import com.paygilant.myshop.ConnectActivity;
 import com.paygilant.myshop.MainActivity;
 import com.paygilant.myshop.R;
 import com.paygilant.myshop.ResultActivityAmount;
+import com.paygilant.myshop.Singlton;
+import com.paygilant.myshop.Utils;
 import com.paygilant.pgdata.CheckPoint.CheckPointStatus;
 import com.paygilant.pgdata.CheckPoint.CheckPointType;
 import com.paygilant.pgdata.CheckPoint.CurrencyCode;
@@ -142,21 +144,18 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+
+            case R.id.register:
+
+                Singlton.getInstance().setReg(true);
+                Utils.logOut(this);
+
+                return true;
+
             case R.id.logout:
-                SharedPreferences preferences;
-                SharedPreferences.Editor editor;
-                preferences = PreferenceManager.getDefaultSharedPreferences(ByOnlineActivity.this);
-                editor = preferences.edit();
-                editor.putString("USER_NAME", "");
-                editor.apply();
 
-                PaygilantManager.getInstance(this).logout();
-                Intent intent = new Intent(ByOnlineActivity.this, ConnectActivity.class);
-                startActivity(intent);
-                finish();
+                Utils.logOut(this);
 
-
-//                addSomething();
                 return true;
 
             default:

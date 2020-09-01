@@ -116,21 +116,17 @@ public class ResultActivityAmount extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.register:
+
+                Singlton.getInstance().setReg(true);
+                Utils.logOut(this);
+
+                return true;
+
             case R.id.logout:
-                SharedPreferences preferences;
-                SharedPreferences.Editor editor;
-                preferences = PreferenceManager.getDefaultSharedPreferences(ResultActivityAmount.this);
-                editor = preferences.edit();
-                editor.putString("USER_NAME", "");
-                editor.apply();
-                PaygilantManager.getInstance(this).logout();
 
-                Intent intent = new Intent(ResultActivityAmount.this, ConnectActivity.class);
-                startActivity(intent);
-                finish();
+                Utils.logOut(this);
 
-
-//                addSomething();
                 return true;
 
             default:

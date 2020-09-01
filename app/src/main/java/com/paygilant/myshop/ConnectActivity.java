@@ -16,9 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.paygilant.PG_FraudDetection_SDK.Biometric.PaygilantScreenListener;
 import com.paygilant.PG_FraudDetection_SDK.PaygilantManager;
 import com.paygilant.myshop.OnLine.ByOnlineActivity;
@@ -27,21 +26,19 @@ import com.paygilant.pgdata.CheckPoint.Registration;
 import com.paygilant.pgdata.CheckPoint.param.Address;
 import com.paygilant.pgdata.CheckPoint.param.User;
 import com.paygilant.pgdata.CheckPoint.param.VerificationType;
-
 import java.io.FileOutputStream;
-
 
 public class ConnectActivity extends AppCompatActivity implements TextWatcher {
 
-    Button buttonRegister,buttonLogin,buttonConnect;
+    Button buttonConnect;
     EditText[] editText = new EditText[4];
     //    PaygilantManager paygilantHandler;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private PaygilantScreenListener listener;
+    TextView titleText;
 
     public static final int READ_PHONE_STATE_PERMISSION = 100;
-    boolean isReg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +46,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         setContentView(R.layout.activity_connect);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ui_appBar_start)));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        isReg = true;
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        LocaleHelper.setLocale(this,"en");
 
@@ -58,13 +55,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         final String userID = preferences.getString("USER_NAME", "");
         if (!userID.equals("")) {
             loginProcess(userID);
-//            editor = preferences.edit();
-//            editor.putString("USER_NAME", userID);
-//            editor.apply();
-//            Intent intent = new Intent(ConnectActivity.this, Amount.class);
-//            intent.putExtra("IF_NOT_FIRST_TIME" , true);
-//            startActivity(intent);
-//            finish();
+
         } else {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -77,61 +68,35 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
             long endTme = System.currentTimeMillis();
             Log.d("Instruction", "time to init paygilant manager :" + (endTme - startTime));
         }
-        buttonRegister = (Button) findViewById(R.id.buttonRegister);
-        buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        titleText = findViewById(R.id.title);
+
         buttonConnect = (Button) findViewById(R.id.buttonConnect);
         editText[0] = findViewById(R.id.editTextConnect);
         editText[1] = findViewById(R.id.editTextPassword);
         editText[2] = findViewById(R.id.editTextEmail);
         editText[3] = findViewById(R.id.editTextPhone);
 
-        for (int i = 0; i<4 ;i++){
-            editText[i].addTextChangedListener(this);
+        if (Singlton.getInstance().isReg()) {
+            titleText.setText(R.string.register);
+        }else{
+            titleText.setText(R.string.login);
+        }
+        for (int i = 1; i < 4; i++) {
+            if (Singlton.getInstance().isReg()) {
+                editText[i].addTextChangedListener(this);
+                editText[i].setVisibility(View.VISIBLE);
+            }else{
+                editText[i].setVisibility(View.INVISIBLE);
+            }
         }
 
-
-
-
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                LocaleHelper.updateLanguage("en",ConnectActivity.this);
-                isReg = true;
-                buttonRegister.setBackgroundColor(getResources().getColor(R.color.selected_button));
-                buttonLogin.setBackgroundColor(getResources().getColor(R.color.white_Color));
-                buttonRegister.setTextColor(getResources().getColor(R.color.white_Color));
-                buttonLogin.setTextColor(getResources().getColor(R.color.unselected_text));
-                for (int i =1; i<4; i++) {
-                    editText[i].setVisibility(View.VISIBLE);
-                }
-//                regProcces();
-            }
-        });
-
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                LocaleHelper.updateLanguage("ru",ConnectActivity.this);
-
-                isReg = false;
-                buttonLogin.setBackgroundColor(getResources().getColor(R.color.selected_button));
-                buttonRegister.setBackgroundColor(getResources().getColor(R.color.white_Color));
-                buttonLogin.setTextColor(getResources().getColor(R.color.white_Color));
-                buttonRegister.setTextColor(getResources().getColor(R.color.unselected_text));
-                for (int i =1; i<4; i++) {
-                    editText[i].setVisibility(View.INVISIBLE);
-                }
-//                loginProcces();
-            }
-        });
 
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isReg) {
+                if (Singlton.getInstance().isReg()) {
                     if ((editText[0].length() > 0) && (editText[1].length() > 0) && (editText[2].length() > 0) && (editText[3].length() > 0)) {
+                        Singlton.getInstance().setReg(false);
                         regProcess();
                     } else {
                         String message = "";
@@ -271,7 +236,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
             editText[0].setText(editText[0].getText().toString().replaceAll(" ",""));
             editText[0].setSelection(editText[0].getText().length());
         }
-        if (isReg) {
+        if (Singlton.getInstance().isReg()) {
             if ((editText[0].length() > 0) && (editText[1].length() > 0) && (editText[2].length() > 0) && (editText[3].length() > 0)) {
                 buttonConnect.setBackgroundColor(getResources().getColor(R.color.ui_appBar_start));
             } else {
@@ -284,7 +249,12 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
                 buttonConnect.setBackgroundColor(getResources().getColor(R.color.colorConnectButton));
             }
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Singlton.getInstance().setReg(false);
     }
 }
 

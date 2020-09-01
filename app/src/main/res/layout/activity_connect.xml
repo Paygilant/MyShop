@@ -17,40 +17,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_weight="4">
-
-            <Button
-                android:id="@+id/buttonRegister"
-                android:layout_width="105dp"
-                android:layout_height="48dp"
-                android:background="@color/selected_button"
-                android:fontFamily="sans-serif-medium"
-                android:lineSpacingExtra="3sp"
-                android:text="@string/new_user"
-                android:gravity="center"
-                android:foreground="?attr/selectableItemBackground"
-                android:textAllCaps="false"
-                android:textColor="@color/white_Color"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-            <Button
-                android:foreground="?attr/selectableItemBackground"
-                android:id="@+id/buttonLogin"
-                android:layout_width="100dp"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/title"
+                android:text="@string/login"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/white_Color"
-                android:textAllCaps="false"
-                android:fontFamily="sans-serif-medium"
-                android:lineSpacingExtra="3sp"
-                android:text="@string/existing_user"
-                android:textColor="@color/unselected_text"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:layout_marginTop="18dp"
+                android:textSize="20sp"/>
 
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

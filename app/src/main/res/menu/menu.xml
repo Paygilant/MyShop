@@ -9,6 +9,9 @@
         app:showAsAction="always"
         android:icon="@drawable/navbar_mobile_light">
         <menu>
+            <item android:id="@+id/register"
+                android:title="@string/register"
+                app:showAsAction="always"/>
             <item android:id="@+id/logout"
                 android:title="@string/logout"
                 app:showAsAction="always"/>
