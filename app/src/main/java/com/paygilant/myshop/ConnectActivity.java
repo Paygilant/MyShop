@@ -9,10 +9,15 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,22 +35,27 @@ import java.io.FileOutputStream;
 
 public class ConnectActivity extends AppCompatActivity implements TextWatcher {
 
-    Button buttonConnect;
+    Button buttonConnect, buttonLogin;
     EditText[] editText = new EditText[4];
     //    PaygilantManager paygilantHandler;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private PaygilantScreenListener listener;
     TextView titleText;
-
+    boolean isReg = false;
     public static final int READ_PHONE_STATE_PERMISSION = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ui_appBar_start)));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        forceLTRSupported(this);
+        toolbar.inflateMenu(R.menu.menu2);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        LocaleHelper.setLocale(this,"en");
@@ -69,34 +79,39 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
             Log.d("Instruction", "time to init paygilant manager :" + (endTme - startTime));
         }
         titleText = findViewById(R.id.title);
-
         buttonConnect = (Button) findViewById(R.id.buttonConnect);
+        buttonLogin = (Button) findViewById(R.id.buttonLogin);
+
         editText[0] = findViewById(R.id.editTextConnect);
         editText[1] = findViewById(R.id.editTextPassword);
         editText[2] = findViewById(R.id.editTextEmail);
         editText[3] = findViewById(R.id.editTextPhone);
 
-        if (Singlton.getInstance().isReg()) {
-            titleText.setText(R.string.register);
-        }else{
-            titleText.setText(R.string.login);
-        }
+
+        titleText.setText(R.string.login);
+
         for (int i = 1; i < 4; i++) {
-            if (Singlton.getInstance().isReg()) {
-                editText[i].addTextChangedListener(this);
-                editText[i].setVisibility(View.VISIBLE);
-            }else{
-                editText[i].setVisibility(View.INVISIBLE);
-            }
+            editText[i].setVisibility(View.INVISIBLE);
         }
+        buttonLogin.setVisibility(View.INVISIBLE);
 
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText(R.string.login);
+                isReg = false;
 
+                for (int i = 1; i < 4; i++) {
+                    editText[i].setVisibility(View.INVISIBLE);
+                }
+                buttonLogin.setVisibility(View.INVISIBLE);
+            }
+        });
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Singlton.getInstance().isReg()) {
+                if (isReg) {
                     if ((editText[0].length() > 0) && (editText[1].length() > 0) && (editText[2].length() > 0) && (editText[3].length() > 0)) {
-                        Singlton.getInstance().setReg(false);
                         regProcess();
                     } else {
                         String message = "";
@@ -236,7 +251,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
             editText[0].setText(editText[0].getText().toString().replaceAll(" ",""));
             editText[0].setSelection(editText[0].getText().length());
         }
-        if (Singlton.getInstance().isReg()) {
+        if (isReg) {
             if ((editText[0].length() > 0) && (editText[1].length() > 0) && (editText[2].length() > 0) && (editText[3].length() > 0)) {
                 buttonConnect.setBackgroundColor(getResources().getColor(R.color.ui_appBar_start));
             } else {
@@ -250,11 +265,34 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
             }
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.register:
+                isReg = true;
+                buttonLogin.setVisibility(View.VISIBLE);
 
+                for (int i = 1; i < 4; i++) {
+                        editText[i].addTextChangedListener(this);
+                        editText[i].setVisibility(View.VISIBLE);
+                }
+                titleText.setText(R.string.register);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Singlton.getInstance().setReg(false);
+        isReg = false;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu2, menu);
+        return true;
     }
 }
 

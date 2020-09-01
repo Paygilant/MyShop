@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import androidx.test.uiautomator.By;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,11 +23,9 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import com.paygilant.PG_FraudDetection_SDK.Biometric.PaygilantScreenListener;
 import com.paygilant.PG_FraudDetection_SDK.Communication.PaygilantCommunication;
 import com.paygilant.PG_FraudDetection_SDK.PaygilantManager;
-import com.paygilant.myshop.ConnectActivity;
 import com.paygilant.myshop.MainActivity;
 import com.paygilant.myshop.R;
 import com.paygilant.myshop.ResultActivityAmount;
-import com.paygilant.myshop.Singlton;
 import com.paygilant.myshop.Utils;
 import com.paygilant.pgdata.CheckPoint.CheckPointStatus;
 import com.paygilant.pgdata.CheckPoint.CheckPointType;
@@ -144,20 +142,9 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-
-            case R.id.register:
-
-                Singlton.getInstance().setReg(true);
-                Utils.logOut(this);
-
-                return true;
-
             case R.id.logout:
-
                 Utils.logOut(this);
-
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -54,6 +54,8 @@
 
         <activity
             android:name="com.paygilant.myshop.ConnectActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+
             android:screenOrientation="portrait">
         </activity>
 

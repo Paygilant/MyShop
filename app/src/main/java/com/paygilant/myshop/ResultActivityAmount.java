@@ -116,12 +116,6 @@ public class ResultActivityAmount extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.register:
-
-                Singlton.getInstance().setReg(true);
-                Utils.logOut(this);
-
-                return true;
 
             case R.id.logout:
 
