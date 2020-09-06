@@ -2,11 +2,10 @@ package com.paygilant.myshop;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.preference.PreferenceManager;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,31 +18,36 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
 import com.paygilant.PG_FraudDetection_SDK.Biometric.PaygilantScreenListener;
 import com.paygilant.PG_FraudDetection_SDK.PaygilantManager;
 import com.paygilant.myshop.OnLine.ByOnlineActivity;
+
 import com.paygilant.pgdata.CheckPoint.Login;
 import com.paygilant.pgdata.CheckPoint.Registration;
 import com.paygilant.pgdata.CheckPoint.param.Address;
 import com.paygilant.pgdata.CheckPoint.param.User;
 import com.paygilant.pgdata.CheckPoint.param.VerificationType;
+
 import java.io.FileOutputStream;
 
-public class ConnectActivity extends AppCompatActivity implements TextWatcher {
 
+public class ConnectActivity extends AppCompatActivity implements TextWatcher {
     Button buttonConnect, buttonLogin;
+
     EditText[] editText = new EditText[4];
-    //    PaygilantManager paygilantHandler;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
-    private PaygilantScreenListener listener;
     TextView titleText;
-    boolean isReg = false;
+    private PaygilantScreenListener listener;
+    private static final String TAG = ConnectActivity.class.getSimpleName();
+    Boolean isStartApp = false;
     public static final int READ_PHONE_STATE_PERMISSION = 100;
+    boolean isReg = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +61,12 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
 //        forceLTRSupported(this);
         toolbar.inflateMenu(R.menu.menu2);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        LocaleHelper.setLocale(this,"en");
+        final String userID = Utils.getStringShareData(this,"USER_NAME","");
 
-
-
-        final String userID = preferences.getString("USER_NAME", "");
         if (!userID.equals("")) {
             loginProcess(userID);
-
         } else {
+
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -81,17 +81,17 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         titleText = findViewById(R.id.title);
         buttonConnect = (Button) findViewById(R.id.buttonConnect);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
-
         editText[0] = findViewById(R.id.editTextConnect);
         editText[1] = findViewById(R.id.editTextPassword);
         editText[2] = findViewById(R.id.editTextEmail);
         editText[3] = findViewById(R.id.editTextPhone);
-
-
         titleText.setText(R.string.login);
+        editText[0].addTextChangedListener(this);
 
         for (int i = 1; i < 4; i++) {
             editText[i].setVisibility(View.INVISIBLE);
+            editText[i].addTextChangedListener(this);
+
         }
         buttonLogin.setVisibility(View.INVISIBLE);
 
@@ -105,8 +105,11 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
                     editText[i].setVisibility(View.INVISIBLE);
                 }
                 buttonLogin.setVisibility(View.INVISIBLE);
+                textChange();
+
             }
         });
+
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +142,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
                 }
             }
         });
+
     }
 
 
@@ -155,38 +159,35 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         final String password = editText[1].getText().toString();
         final String email = editText[2].getText().toString();
         final String phoneNumber = editText[3].getText().toString();
-        editor = preferences.edit();
 
-        editor.putString("USER_NAME", userName);
-        editor.putString("PASSWORD", password);
-        editor.putString("EMAIL", email);
-        editor.putString("PHONE_NUMBER", phoneNumber);
-        editor.apply();
+        Utils.setStringShareData(this,"USER_NAME", userName);
+        Utils.setStringShareData(this,"PASSWORD", password);
+        Utils.setStringShareData(this,"EMAIL", email);
+        Utils.setStringShareData(this,"PHONE_NUMBER", phoneNumber);
+
 
         Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
                 "",  "New York",  "NY", "US", "10001", "+12885550153");
         User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);
         Registration currReg = new Registration(user);
+
         PaygilantManager.getInstance(this).arriveToCheckPoint(currReg);
         boolean isPress = true;
         Intent intent = new Intent(ConnectActivity.this, ByOnlineActivity.class);
         startActivity(intent);
         finish();
-
-
         // User clicked OK button
-
     }
     /**
      * collect data from login status and get risk level with message
      */
     private void loginProcess(String userID) {
         final String userName = userID;
-        final String email = preferences.getString("EMAIL", "");
-        final String phoneNumber = preferences.getString("PHONE_NUMBER", "");
-        editor = preferences.edit();
-        editor.putString("USER_NAME", userName);
-        editor.apply();
+        final String email = Utils.getStringShareData(this,"EMAIL","");
+
+        final String phoneNumber = Utils.getStringShareData(this,"PHONE_NUMBER", "");
+        Utils.setStringShareData(this,"USER_NAME",userName);
+
         Address user_address = new Address("Alexander", "Delarge", "314 Wall street",
                 "",  "New York",  "NY", "US", "10001", "+12885550153");
         User user = new User(userName,"tylerd@gmail.com", VerificationType.VERIFIED,"+12885550153",VerificationType.UNKNOWN,user_address);
@@ -208,6 +209,8 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
     @Override
     protected void onResume(){
         super.onResume();
+        Log.d(TAG, "onResume");
+
 //        listener = PaygilantManager.getInstance(this).startNewScreenListener(ScreenListenerType.LOGIN_FORM,1,this);
     }
     @Override
@@ -221,6 +224,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
     protected void onDestroy() {
 
         super.onDestroy();
+
     }
     void saveImage(String pthAndFylTtlVar, Bitmap iptBmjVar)
     {
@@ -232,6 +236,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         }
         catch (Exception errVar) { errVar.printStackTrace(); }
     }
+
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -245,6 +250,12 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
+
+        textChange();
+
+    }
+
+    private void textChange() {
         String str = editText[0].getText().toString();
         if(str.length() > 0 && str.contains(" "))
         {
@@ -265,6 +276,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
             }
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -274,10 +286,13 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
                 buttonLogin.setVisibility(View.VISIBLE);
 
                 for (int i = 1; i < 4; i++) {
-                        editText[i].addTextChangedListener(this);
-                        editText[i].setVisibility(View.VISIBLE);
+//                    editText[i].addTextChangedListener(this);
+                    editText[i].setVisibility(View.VISIBLE);
                 }
                 titleText.setText(R.string.register);
+                textChange();
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

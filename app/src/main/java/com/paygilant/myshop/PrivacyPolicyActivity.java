@@ -35,39 +35,41 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         }
 
 
-        WebView web=(WebView)findViewById(R.id.web);
-        WebView web2=(WebView)findViewById(R.id.web2);
+        WebView web = findViewById(R.id.web);
+        WebView web2 = findViewById(R.id.web2);
 
         web.getSettings().setJavaScriptEnabled(true);
         web2.getSettings().setJavaScriptEnabled(true);
 
-        String prompt = "";
-        try {
-            InputStream inputStream = getResources().openRawResource(R.raw.privacy);
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            prompt = new String(buffer);
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String prompt2 = "";
-        try {
-            InputStream inputStream = getResources().openRawResource(R.raw.privacy2);
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            prompt2 = new String(buffer);
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        web.loadDataWithBaseURL(null,prompt,"text/html","utf-8",null);
+//        String prompt = "";
+//        try {
+//            InputStream inputStream = getResources().openRawResource(R.raw.privacy);
+//            byte[] buffer = new byte[inputStream.available()];
+//            inputStream.read(buffer);
+//            prompt = new String(buffer);
+//            inputStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String prompt2 = "";
+//        try {
+//            InputStream inputStream = getResources().openRawResource(R.raw.privacy2);
+//            byte[] buffer = new byte[inputStream.available()];
+//            inputStream.read(buffer);
+//            prompt2 = new String(buffer);
+//            inputStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        web2.loadDataWithBaseURL(null,prompt2,"text/html","utf-8",null);
+        web.loadUrl("file:///android_asset/privacy.html");
+        web2.loadUrl("file:///android_asset/privacy2.html");
 
+//
+//        web.loadData(prompt,"text/html","utf-8");
+//
+//        web2.loadData(prompt2,"text/html","utf-8");
 
-//        web.loadUrl("file:///android_res/raw/privacy.html");
-//        web2.loadUrl("file:///android_res/raw/privacy2.html");
         findViewById(R.id.buttonAgree).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
