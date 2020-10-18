@@ -250,10 +250,22 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
                 user,billingAddress,shippingAddress,payment,authResponse);
         PaygilantManager.getInstance(this).getRiskForCheckPoint(transaction, new PaygilantCommunication() {
             @Override
-            public void receiveRisk(int i, String s, String s1) {
-                PaygilantManager.getInstance(ByOnlineActivity.this).updateCheckPointStatus(CheckPointType.TRANSACTION, s1, CheckPointStatus.APPROVED, UUID.randomUUID().toString());
+            public void receiveRisk(int score, String s, String s1) {
 
-                if (i == -1 ){
+                switch (score){
+                    case -1:
+                    case -2:
+                    case 0:
+                        PaygilantManager.getInstance(ByOnlineActivity.this).updateCheckPointStatus(CheckPointType.TRANSACTION, s1, CheckPointStatus.APPROVED, UUID.randomUUID().toString());
+                    break;
+                    case 1:
+                    case 2:
+                    case 3:
+                        PaygilantManager.getInstance(ByOnlineActivity.this).updateCheckPointStatus(CheckPointType.TRANSACTION, s1, CheckPointStatus.DENIED, UUID.randomUUID().toString());
+                        break;
+                }
+
+                if (score == -1 ){
                     final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ByOnlineActivity.this);
                     alertDialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.app_name));
                     alertDialogBuilder.setMessage(getResources().getString(R.string.internet_connection));
@@ -266,13 +278,12 @@ public class ByOnlineActivity extends AppCompatActivity implements MyRecyclerVie
                                 }
                             });
 
-
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 }else {
                     isScanFirst = false;
                     Intent intent = new Intent(ByOnlineActivity.this, ResultActivityAmount.class);
-                    intent.putExtra("RISK_RESULT", i);
+                    intent.putExtra("RISK_RESULT", score);
                     hud.dismiss();
                     startActivity(intent);
                     finish();

@@ -1,8 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.GoodieBag:Pinview:v1.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ad848a666a168db1600cc5979d821524/jetified-Pinview-v1.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ad848a666a168db1600cc5979d821524/jetified-Pinview-v1.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b1fe2499fb04434849aab41f5afde08/jetified-Pinview-v1.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b1fe2499fb04434849aab41f5afde08/jetified-Pinview-v1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b1fe2499fb04434849aab41f5afde08/jetified-Pinview-v1.1/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
