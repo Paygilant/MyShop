@@ -86,4 +86,6 @@ Thank you so much!
     <string name="description_fingerprint_icon">Fingerprint icon</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="reg_message">That username is taken. Try another.</string>
+    <string name="reg_message_error">Unable to connect</string>
 </resources>

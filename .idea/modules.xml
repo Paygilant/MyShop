@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MyShop.iml" filepath="$PROJECT_DIR$/MyShop.iml" group="MyShop" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="MyShop/app" />
+      <module fileurl="file://$PROJECT_DIR$/MyShop.iml" filepath="$PROJECT_DIR$/MyShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MyShop.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MyShop.app.iml" />
     </modules>
   </component>
 </project>

@@ -25,6 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.paygilant.PG_FraudDetection_SDK.Biometric.PaygilantScreenListener;
 import com.paygilant.PG_FraudDetection_SDK.PaygilantManager;
 import com.paygilant.myshop.OnLine.ByOnlineActivity;
@@ -36,6 +43,10 @@ import com.paygilant.pgdata.CheckPoint.param.User;
 import com.paygilant.pgdata.CheckPoint.param.VerificationType;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class ConnectActivity extends AppCompatActivity implements TextWatcher {
@@ -48,6 +59,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
     Boolean isStartApp = false;
     public static final int READ_PHONE_STATE_PERMISSION = 100;
     boolean isReg = false;
+    FirebaseFirestore db ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +72,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        forceLTRSupported(this);
         toolbar.inflateMenu(R.menu.menu2);
+        db = FirebaseFirestore.getInstance();
 
         final String userID = Utils.getStringShareData(this,"USER_NAME","");
 
@@ -115,8 +128,48 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
             public void onClick(View v) {
                 if (isReg) {
                     if ((editText[0].length() > 0) && (editText[1].length() > 0) && (editText[2].length() > 0) && (editText[3].length() > 0)) {
-                        regProcess();
+
+                        DocumentReference docRefGet = db.collection("users").document("dataUsers");
+                        docRefGet.get()
+                                .addOnCompleteListener(
+                                        new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (!task.getResult().getMetadata().isFromCache()) {
+                                                    if (task.isSuccessful()) {
+                                                        DocumentSnapshot document = task.getResult();
+                                                        if (document.exists()) {
+                                                            if (checkKeyFromHashMap(editText[0].getText().toString(), document.getData())) {
+                                                                Toast.makeText(ConnectActivity.this, getResources().getString(R.string.reg_message), Toast.LENGTH_LONG).show();
+                                                            } else {
+                                                                Map<String, Object> user = new HashMap<>();
+                                                                user.put(editText[0].getText().toString(), "");
+                                                                DocumentReference docRef = db.collection("users").document("dataUsers");
+                                                                docRef.update(user)
+                                                                        .addOnSuccessListener(
+                                                                                new OnSuccessListener<Void>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(Void aVoid) {
+                                                                                        regProcess();
+                                                                                    }
+                                                                                })
+                                                                        .addOnFailureListener(getOnFailureListener());
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(ConnectActivity.this, getResources().getString(R.string.reg_message_error), Toast.LENGTH_LONG).show();
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(ConnectActivity.this, getResources().getString(R.string.reg_message_error), Toast.LENGTH_LONG).show();
+                                                    }
+                                                }else{
+                                                    Toast.makeText(ConnectActivity.this, getResources().getString(R.string.reg_message_error), Toast.LENGTH_LONG).show();
+
+                                                }
+                                            }
+                                        })
+                                .addOnFailureListener(getOnFailureListener());
                     } else {
+
                         String message = "";
 
                         if (editText[0].length() <= 0){
@@ -144,8 +197,23 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         });
 
     }
+    private OnFailureListener getOnFailureListener() {
+        return new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ConnectActivity.this,getResources().getString(R.string.reg_message_error),Toast.LENGTH_LONG).show();
 
-
+            }
+        };
+    }
+    private boolean checkKeyFromHashMap(String search, Map<String,Object> map){
+        List<String> keys = new ArrayList<>(map.keySet());
+        for (String key : map.keySet())
+            if (key.equals(search)){
+                return true;
+            }
+        return false;
+    }
 
     /**
      * collect data from register status and get risk level with message
