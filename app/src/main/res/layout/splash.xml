@@ -20,8 +20,8 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/myshop" />
+        android:layout_height="72dp"
+        android:src="@drawable/buybuybuy_splash" />
 
 
 </LinearLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyShop</string>
+    <string name="app_name">BuyBuyBuy</string>
     <string name="pinCode_instructions">INTER PIN</string>
     <string name="amount_instructions">insert payment details</string>
     <string name="Thank_you_massage">Paygilant appreciates your cooperation</string>
