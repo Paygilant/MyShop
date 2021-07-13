@@ -9,6 +9,8 @@
     <string name="p2p">You choose to send </string>
     <string name="Instruction">Hello and Welcome to our testing application!\n</string>
     <string name="PGServerURL">https://poc-eu1.paygilant.com/a7713bdf9ee5/</string>
+<!--    <string name="PGServerURL">https://poc-eu1.paygilant.com/9b10ed0fad2c/</string>-->
+
     <string name="rejected">DENIED</string>
     <string name="expired_message">This demo has expired</string>
     <string name="internet_connection">No internet connection</string>

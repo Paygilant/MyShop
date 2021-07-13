@@ -143,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // ask permission
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_CONTACTS}, READ_MAIN_SCREEN);
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.CAMERA}, READ_MAIN_SCREEN);
         } else {
         }
     }

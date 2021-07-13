@@ -81,10 +81,9 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
         } else {
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.CAMERA}
+                requestPermissions(new String[]{
+                                Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.CAMERA}
                         , READ_PHONE_STATE_PERMISSION);
             }
             long startTime = System.currentTimeMillis();
@@ -271,6 +270,7 @@ public class ConnectActivity extends AppCompatActivity implements TextWatcher {
     @Override
     public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PaygilantManager.getInstance(this).onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }

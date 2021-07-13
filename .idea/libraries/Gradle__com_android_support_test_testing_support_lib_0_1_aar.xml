@@ -13,6 +13,12 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ac2b4ce33f5fea86eb34d8290ad5a5be/jetified-testing-support-lib-0.1/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ac2b4ce33f5fea86eb34d8290ad5a5be/jetified-testing-support-lib-0.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ac2b4ce33f5fea86eb34d8290ad5a5be/jetified-testing-support-lib-0.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/164551cbefeb66b836376847c206ab67/jetified-testing-support-lib-0.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/164551cbefeb66b836376847c206ab67/jetified-testing-support-lib-0.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/164551cbefeb66b836376847c206ab67/jetified-testing-support-lib-0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/070a6e38a43e3158ee8af46a65046d94/jetified-testing-support-lib-0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/070a6e38a43e3158ee8af46a65046d94/jetified-testing-support-lib-0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/070a6e38a43e3158ee8af46a65046d94/jetified-testing-support-lib-0.1/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support.test/testing-support-lib/0.1/6418b72b8e77b40035b31f64938a84db843b20b9/testing-support-lib-0.1-javadoc.jar!/" />
